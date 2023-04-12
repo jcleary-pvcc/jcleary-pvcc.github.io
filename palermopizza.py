@@ -27,8 +27,11 @@ EXTRA_LARGE_ALIAS = [ "EXTRA-LARGE", "Extra-Large", "XL", "extra-large", "xl",
 
 #define global variables
 pizza_count = 0
+pizza_total = 0
 pizza_size = 0
 total = 0
+total_plus_tax = 0
+sales_tax_cost = 0
 large_pizza_count = 0
 small_pizza_count = 0
 medium_pizza_count = 0
@@ -71,34 +74,32 @@ def sort_variables():
     pizza_count = 0
     
 def perform_calculations():
-    global tuitionfee, capitalfee, institutionfee, activityfee, totalowed, balance
-    if inout == 1:
-        tuitionfee = numcredits * RATE_TUITION_IN
-        capitalfee = 0
-    else:
-        tuitionfee = numcredits * RATE_TUITION_OUT
-        capitalfee = numcredits * RATE_CAPITAL
+    global large_pizza_count, small_pizza_count, medium_pizza_count, xl_pizza_count, total, SALES_TAX, SMALL_PIZZA, MEDIUM_PIZZA, LARGE_PIZZA, EXTRA_LARGE_PIZZA, total_plus_tax, sales_tax_cost
+    total = (large_pizza_count + LARGE_PIZZA) + (small_pizza_count * SMALL_PIZZA) + (medium_pizza_count * MEDIUM_PIZZA) + (xl_pizza_count * EXTRA_LARGE_PIZZA) 
+    sales_tax_cost = total * SALES_TAX
+    total_plus_tax = total + sales_tax_cost
+    pizza_total = large_pizza_count + small_pizza_count + medium_pizza_count + xl_pizza_count
 
-    institutionfee = numcredits * RATE_INSTITUTION
-    activityfee = numcredits * RATE_ACTIVITY
-    totalowed = tuitionfee + capitalfee + institutionfee + activityfee
-    balance = totalowed - scholarshipamt
+
 
 def display_results():
     print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    print('Number of credits : ' + str(numcredits))
+    print('Number of pizzas : ' + str(pizza_total))
+    if small_pizza_count():
+        print('Number of small pizzas : ' + str(small_pizza_count))
+    if medium_pizza_count():
+        print('Number of medium pizzas : ' + str(medium_pizza_count))
+    if large_pizza_count():
+        print('Number of large pizzas : ' + str(large_pizza_count))
+    if xl_pizza_count():
+        print('Number of extra-large pizzas : ' + str(xl_pizza_count))
     print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    print('Tuition           $ ' + format(tuitionfee, '10,.2f'))
-    print('Capital Fee       $ ' + str(capitalfee))
-    print('Institution Fee   $ ' + str(institutionfee))
-    print('Activity Fee      $ ' + str(activityfee))
-    print('Total             $ ' + str(totalowed))
-    print('Scholarship       $ ' + str(scholarshipamt))
+    print('Total             $ ' + format(total, '10,.2f'))
+    print('Sales Tax         $ ' + str(sales_tax_cost, '10,.2f'))
     print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    print('Balance Owed      $: ' + str(balance))
+    print('Balance Owed      $: ' + str(total_plus_tax, '10,.2f'))
     print('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
     print(str(datetime.datetime.now()))
-    print("NOTE: PVCC Fee Rates: https://www.pvcc.edu/tuition-and-fees")
 
 #### main program call ####
 main()
